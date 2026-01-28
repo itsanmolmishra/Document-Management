@@ -14,6 +14,12 @@ import { Settings } from './components/settings/Settings';
 import { Search } from './components/search/Search';
 import { Integrations } from './components/integrations/Integrations';
 
+const DemoNotice = () => (
+  <div className="w-full bg-amber-50 border-b border-amber-200 text-amber-900 text-xs sm:text-sm px-4 py-2 text-center">
+    This website is for demonstration only. No real services, authentication, or payments are provided.
+  </div>
+);
+
 const AppContent = () => {
   const { user } = useApp();
   const [currentView, setCurrentView] = useState('dashboard');
@@ -24,7 +30,12 @@ const AppContent = () => {
   }, [currentView]);
 
   if (!user) {
-    return <Login />;
+    return (
+      <div className="min-h-screen flex flex-col">
+        <DemoNotice />
+        <Login />
+      </div>
+    );
   }
 
   const renderView = () => {
@@ -45,9 +56,12 @@ const AppContent = () => {
   };
 
   return (
-    <MainLayout currentView={currentView} onViewChange={setCurrentView}>
-      {renderView()}
-    </MainLayout>
+    <div className="min-h-screen flex flex-col">
+      <DemoNotice />
+      <MainLayout currentView={currentView} onViewChange={setCurrentView}>
+        {renderView()}
+      </MainLayout>
+    </div>
   );
 };
 
